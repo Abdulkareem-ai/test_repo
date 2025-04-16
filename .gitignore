@@ -1,0 +1,14 @@
+*.onnx
+*.plan
+./models/*
+*.png
+*.jpeg
+*.jpg
+*.mp4
+*.pbtxt
+*.log
+*.cos
+ANPR/*
+FR/data/*
+dashboard/mongo/*
+models/face_features/*

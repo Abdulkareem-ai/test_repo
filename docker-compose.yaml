@@ -1,0 +1,104 @@
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+      max-file: "1"
+      max-size: 10m
+      # tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+      tag: "{{.Name}}"
+x-no-logging:
+  &no-logging
+  driver: "none"
+
+services:
+  redis:
+    restart: always
+    image: redis:6.2.2
+    ports:
+      - "6379:6379"
+    command: "--port 6379 --requirepass aletheia@123"
+    logging: *default-logging
+
+  engine:
+    runtime: nvidia
+    restart: unless-stopped
+    image: aletheiaai/deployments:tritonserver.amd64.23.05.14032024
+    volumes:
+      - ./models:/models
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/shm:/dev/shm 
+    shm_size: 1024m
+    ports:
+      # - 8000:8000
+      - 8001:8001
+      # - 8002:8002
+    # command: "tritonserver --log-verbose=0 --model-control-mode=poll --repository-poll-secs=5 --model-repository=/models --exit-on-error=false"
+    logging: *default-logging
+
+  featuresdb:
+    restart: always
+    image: aletheiaai/deployments:qdrant.main
+    volumes:
+      # - ./FR/data/:/workspace/data/:rw
+      - ./FR/data/featuresdb/:/qdrant/storage:z
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6333:6333"
+      - "50051:6334"
+    # environment:
+    #   - GRPC_SERVER_ADDRESS=0.0.0.0
+    #   - GRPC_SERVER_PORT=50051
+    #   - DB_DATA_PATH=/workspace/data/fatima_group_arc_29072024.db
+    logging: *default-logging
+
+  face_registration:
+    restart: always
+    image: aletheiaai/deployments:detectorclient.v2024.12.beta
+    volumes:
+      - ./FR/data/:/data_mount
+      - /dev/shm:/dev/shm 
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/fr_main.yaml:/workspace/config.yaml
+    depends_on:
+      - featuresdb
+      - redis
+    environment:
+      - MODEL_NAME=face_registration_server
+      - REDIS_INPUT_QUEUE=BufferOutQueue
+      - REDIS_INPUT_HASH_KEY=Frame
+      - CAM_ID=cam100
+      - FEATURES_DB_PATH=fatima_group
+    ports:
+      - 5000:5000
+    logging: *default-logging
+  
+  roi_annotator:
+    image: aletheiaai/deployments:roi_annotator.v2024.12.beta
+    restart: always
+    init: true
+    mem_limit: 1024M
+    volumes:
+      - ./configs/roi_annotator.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+    network_mode: host
+    ports:
+      - "6100:6100"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "1"
+        max-size: 10m
+  
+  autoheal:
+      image: willfarrell/autoheal:latest
+      tty: true
+      restart: always
+      environment:
+        - AUTOHEAL_CONTAINER_LABEL=all
+        - AUTOHEAL_INTERVAL=10
+        - AUTOHEAL_START_PERIOD=30
+        - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10
+        - DOCKER_SOCK=/var/run/docker.sock
+        - CURL_TIMEOUT=30
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock

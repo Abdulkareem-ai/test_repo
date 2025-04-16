@@ -1,0 +1,249 @@
+cam_prop_prefix: cam
+cams:
+  cam001:
+    cam_title: cam001
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam002:
+    cam_title: cam002
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam003:
+    cam_title: cam003
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam004:
+    cam_title: cam004
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam005:
+    cam_title: cam005
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam006:
+    cam_title: cam006
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: face_recognition_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam101:
+    cam_title: cam101
+    counting_lines:
+    - - 63
+      - 357
+      - 1797
+      - 966
+      - UPTODOWN
+      - EXIT
+    crop_region: []
+    redis:
+      in_channel: anpr_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes:
+    - - 0
+      - 0
+      - 1920
+      - 0
+      - 1920
+      - 1080
+      - 0
+      - 1080
+      - Box 0
+  cam102:
+    cam_title: cam102
+    counting_lines:
+    - - 129
+      - 975
+      - 1572
+      - 279
+      - UPTODOWN
+      - EXIT
+    crop_region: []
+    redis:
+      in_channel: anpr_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes:
+    - - 0
+      - 0
+      - 1920
+      - 0
+      - 1920
+      - 1080
+      - 0
+      - 1080
+      - Box 0
+  cam103:
+    cam_title: cam103
+    counting_lines:
+    - - 180
+      - 399
+      - 1137
+      - 1029
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    redis:
+      in_channel: anpr_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes:
+    - - 0
+      - 0
+      - 1920
+      - 0
+      - 1920
+      - 1080
+      - 0
+      - 1080
+      - Box 0
+  cam104:
+    cam_title: cam104
+    counting_lines:
+    - - 606
+      - 1065
+      - 1833
+      - 339
+      - UPTODOWN
+      - EXIT
+    crop_region: []
+    redis:
+      in_channel: anpr_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes:
+    - - 0
+      - 0
+      - 1920
+      - 0
+      - 1920
+      - 1080
+      - 0
+      - 1080
+      - Box 0
+  cam201:
+    cam_title: cam201
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam202:
+    cam_title: cam202
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam203:
+    cam_title: cam203
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam204:
+    cam_title: cam204
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam205:
+    cam_title: cam205
+    counting_lines:
+    - - 258
+      - 480
+      - 1665
+      - 669
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes:
+    - - 0
+      - 0
+      - 1920
+      - 0
+      - 1920
+      - 1080
+      - 0
+      - 1080
+      - Box 0
+  cam206:
+    cam_title: cam206
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+  cam207:
+    cam_title: cam207
+    counting_lines: []
+    crop_region: []
+    redis:
+      in_channel: counting_outqueue
+      in_hash: anything
+      url: redis://default:aletheia@123@172.17.0.1:6379
+    roi_boxes: []
+enable_drawing: true
+enter_line_color: blue
+exit_line_color: green
+framerate: 25
+image_quality: 100
+redis_auth_enabled: true
+redis_publish_channel: countingroi
+rtsp_server:
+  http_port: 1984
+  ip: 34.96.141.209
+  password: abc12345
+  rtsp_port: 8554
+  username: admin
+show_bboxes: true
+show_count_forcefully: true
+show_labels: true
+show_trackids: true
+video_writer_hardware_acceleration: true
+video_writer_type: gstreamer

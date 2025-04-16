@@ -1,0 +1,142 @@
+redis_url: redis://default:aletheia@123@172.17.0.1:6379
+redis_input_queue: face_recognition_outqueue
+redis_pubsub: false
+
+
+streamer_frame_size: 720x1280
+streamer_fps: 25
+streamer_enable_drawing: true
+streamer_enter_line_color: blue
+streamer_exit_line_color: green
+streamer_show_bboxes: true
+streamer_show_count: true
+streamer_show_labels: true
+streamer_show_trackids: true
+streamer_hardware_acceleration: true
+
+rtsp_server_credentials: admin:abc12345
+rtsp_server_port: 8554
+rtsp_server_http_port: 1984
+
+
+# counting_lines:
+#   cam001: []
+#   cam002: []
+#   cam003: []
+#   cam004: []
+#   cam005: []
+#   cam006: []
+#   cam007: []
+#   cam008: []
+#   cam009: []
+#   cam010: []
+#   cam011: []
+#   cam012: []
+#   cam013: []
+#   cam014: []
+# roi_boxes:
+#   cam001: []
+#   cam002: []
+#   cam003: []
+#   cam004: []
+#   cam005: []
+#   cam006: []
+#   cam007: []
+#   cam008: []
+#   cam009: []
+#   cam010: []
+#   cam011: []
+#   cam012: []
+#   cam013: []
+#   cam014: []
+# crop_region:
+#   cam001: []
+#   cam002: []
+#   cam003: []
+#   cam004: []
+#   cam005: []
+#   cam006: []
+#   cam007: []
+#   cam008: []
+#   cam009: []
+#   cam010: []
+#   cam011: []
+#   cam012: []
+#   cam013: []
+#   cam014: []
+
+# cam_prop_prefix: cam
+# cams:
+#   cam001:
+#     cam_title: cam001
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+#   cam002:
+#     cam_title: cam002
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+#   cam003:
+#     cam_title: cam003
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+#   cam004:
+#     cam_title: cam004
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+#   cam005:
+#     cam_title: cam005
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+#   cam006:
+#     cam_title: cam006
+#     counting_lines: []
+#     crop_region: []
+#     redis:
+#       in_channel: face_recognition_outqueue
+#       in_hash: anything
+#       url: redis://default:aletheia@123@172.17.0.1:6379
+#     roi_boxes: []
+# enable_drawing: true
+# enter_line_color: blue
+# exit_line_color: green
+# framerate: 25
+# image_quality: 100
+# redis_auth_enabled: true
+# redis_publish_channel: nothing
+# rtsp_server:
+#   http_port: 1984
+#   ip: 34.96.141.209
+#   password: abc12345
+#   rtsp_port: 8554
+#   username: admin
+# show_bboxes: true
+# show_count_forcefully: true
+# show_labels: true
+# show_trackids: true
+# video_writer_hardware_acceleration: true
+# video_writer_type: gstreamer

@@ -1,0 +1,8 @@
+db_data_path: /workspace/data/fatima_group_arc_29072024.db
+db_labels_path: /workspace/data/labels.db
+grpc_server_address: 0.0.0.0
+grpc_server_port: 50051
+grpc_tls_enabled: false
+clientcert_path: /workspace/certs/client.crt
+servercert_path: /workspace/certs/server.crt
+serverkey_path: /workspace/certs/server.key

@@ -1,0 +1,110 @@
+services:
+  imagebuffer:
+    image: aletheiaai/deployments:imagebuffer.gpu.amd64.v1.6
+    runtime: nvidia
+    # restart: unless-stopped
+    volumes:
+      - ../../configs/main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/shm:/dev/shm
+      - ../../../videos:/videos
+    environment:
+      - IMAGE_BUFFER_STREAM_URL=${IMAGE_BUFFER_STREAM_URL}
+      - CAM_ID=${CAM_ID}
+      - IMAGE_BUFFER_START_TIME=${IMAGE_BUFFER_START_TIME}
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m
+
+  detector:
+    image: aletheiaai/deployments:detectorclient.v1.3.2
+    restart: unless-stopped
+    environment:
+      - MODEL_NAME=face_detection
+      - REDIS_INPUT_QUEUE=BufferOutQueue
+      - DEBUG=0
+      - CAM_ID=${CAM_ID}
+    volumes:
+      - ../../configs/main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/shm:/dev/shm
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m
+
+  mesh:
+    image: aletheiaai/deployments:detectorclient.v1.3.2
+    restart: unless-stopped
+    volumes:
+       - ../../configs/main.yaml:/workspace/config.yaml
+       - /etc/localtime:/etc/localtime:ro
+       - ../data/:/data_mount
+       - /dev/shm:/dev/shm 
+    init: true
+    environment:
+      - MODEL_NAME=face_mesh:1
+      - REDIS_INPUT_QUEUE=face_detection_outqueue
+      - CAM_ID=${CAM_ID}
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m
+
+  features:
+    image: aletheiaai/deployments:detectorclient.v1.3.2
+    restart: unless-stopped
+    volumes:
+      - ../../configs/main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - ../data/:/data_mount
+      - /dev/shm:/dev/shm 
+    environment:
+      - MODEL_NAME=face_features:1
+      - REDIS_INPUT_QUEUE=face_mesh_outqueue
+      - CAM_ID=${CAM_ID}
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m
+
+  recognition:
+    image: aletheiaai/deployments:detectorclient.v1.3.2
+    restart: unless-stopped
+    volumes:
+      - ../../configs/main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - ../data/:/data:rw
+      - /dev/shm:/dev/shm 
+    environment:
+      - MODEL_NAME=face_recognition:1
+      - REDIS_INPUT_QUEUE=face_features_outqueue
+      - CAM_ID=${CAM_ID}
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m
+  
+  videowriter:
+    image: aletheiaai/deployments:videowriter.gpu.amd64.main
+    runtime: nvidia
+    environment:
+      - REDIS_INPUT_QUEUE=face_recognition_outqueue
+      - VIDEOWRITER_PREFIX=${CAM_ID}
+      - CAM_ID=${CAM_ID}
+    volumes:
+      - ../../configs/main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - ../data:/data
+      - /dev/shm:/dev/shm
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "1"
+          max-size: 100m

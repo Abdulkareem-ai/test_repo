@@ -1,0 +1,99 @@
+redis_url: "redis://default:aletheia@123@172.17.0.1:6379/"
+redis_hash_timeout: 3000
+redis_timeout: 2
+redis_queue_maxlen: 5
+
+imagebuffer_out_channel: "BufferOutQueue"
+imagebuffer_hash_name: "Frame"
+imagebuffer_fps: 15
+imagebuffer_target_fps: 15
+imagebuffer_rtsp_transport: tcp
+imagebuffer_hw_accel: false
+imagebuffer_frame_read_timeout: 10
+imagebuffer_sensor_timeout: 10
+imagebuffer_frame_timeout: 1000
+
+#videowriter_chunk_size_minutes: 10
+videowriter_frame_size: 720x1280
+videowriter_fps: 15
+
+classes_detection_names:
+- face
+- mask
+classes_tracked_ids:
+- 0
+classes_recognition_labels:
+- None
+class_recognition_id: 0 #id or None
+class_recognition_crop_size: 100
+detection_threshold: 0.1
+data_path: /data_mount
+debug_log: 0
+engine_url: 172.17.0.1:8001
+
+tracker_type : t2 #t1:kiou t2:byte
+tracker_track_thres: 0.3
+tracker_iou_thres: 0.8
+tracker_min_hits: 2
+tracker_keep_track: 150
+
+tracker_1_conf_thres: 0.3                         #threshold for object detection score
+tracker_1_iou_thres: -0.05                        #IOU threshold for tracks, -0.05
+tracker_1_min_hits: 2                             #number of frames to start track
+tracker_1_track_conf: 0.5                         #threshold for track confidence
+tracker_1_keep_track: 150                          #number of frames to keep track
+tracker_1_output_pending_tracks: false            #use previous track info if no current detection is available
+#tracker2 Advanced configs
+
+tracker_2_track_thresh : 0.25
+tracker_2_track_buffer : 150
+tracker_2_match_thresh : 0.8
+tracker_2_min_box_area : 1
+
+##################### pose config
+# face_pose_enabled: 1
+# face_pose_yaw_pitch_role_ranges:
+# - - -35
+#   - 35
+# - - -20
+#   - 20
+# - - -20
+#   - 20
+
+################### features config
+face_quality_threshold: 0.4
+################## recognition config
+class_recognition_threshold: 0.5
+class_registration_threshold: 0.3
+face_recognition_confusion_threshold: 0.4
+dashboard_url: http://34.96.141.209:8000/api/attendance/checkIn
+confusion_api_url: http://34.96.141.209:8000/api/attendance/missingPeople
+featuresdb_server_url: 172.17.0.1:50051
+# featuresdb_database: /workspace/data/fatima_group_arc_29072024.db
+featuresdb_database: fatima_group
+featuresdb_top_k: 2
+face_recognition_positive_frames: 2
+# face_recognition_negative_frames: 2
+# face_recognition_negative_policy: retry
+
+###################### registration config
+face_registration_server_url: 0.0.0.0:5000
+LICENSE_TOKEN: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb21wYW55IjoiQWxldGhlaWEtQUkiLCJlbWFpbCI6Im9tYWlyLmhhc3NhYW5AYWxldGhlaWEtYWkudGVjaCIsImlhdCI6MTczNTYyMzI2MSwibmJmIjoxNzA3ODA0MzYwLCJleHAiOjMzMjY1MTcwMzcwfQ.HZnooaZw2K6uA0G7cbdH6BW_qHZo8Inn81tt8b0iSfAk_5Hm3zjV4z7XfySM0cJ-Pqv1I1uiVvVp4zT14y95mWiRxKmvdKq_MLTsW8VqmmrRWfH7aKX4mKQUPsbpfHc5LvFq30P5M1xQaVfZkKIdd-Wc2GrfCD44z0aDV_eSkzTmNi9PRixYWOEQ8zrc4lJyuiCbcFX7QXrzyDe3NJPbmk8rWkRal9i5nx64RMRVDL4_M_HblQ4EESb2Cphjf2ctEli5S1IBK5bo18-9k9Dgc0uROPVBSZ-L2YX8A1GbOAlGgHguPxsKcnRcBBixF7pESh3S31bjKe-PbaFgPLtKpQ
+
+# counting_subscribe_channel: nothing
+skip_tracker: False
+
+streamer_frame_size: 720x1280
+streamer_fps: 25
+streamer_enable_drawing: true
+streamer_enter_line_color: blue
+streamer_exit_line_color: green
+streamer_show_bboxes: true
+streamer_show_count: true
+streamer_show_labels: true
+streamer_show_trackids: true
+streamer_hardware_acceleration: true
+rtsp_server_credentials: admin:abc12345
+rtsp_server_http_credentials: admin@aletheia-ai.tech:Aletheia@123
+rtsp_server_port: 8554
+rtsp_server_http_port: 1984

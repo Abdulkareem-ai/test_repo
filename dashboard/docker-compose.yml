@@ -1,0 +1,71 @@
+version: '3.3'
+services:
+  mongodb:
+    image : mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    # environment:
+    #   - PUID=1000
+    #   - PGID=1000
+    volumes:
+      - ./mongo:/data/db
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    # command: systemctl status mongod
+  nestjs-apis:
+    image: aletheiaai/deployments:dashboard.nest.fatima-group.12022025
+    # image: aletheiaai/deployments:dashboard.nest.fatima-group.03022025
+    depends_on:
+      - mongodb
+    environment:
+      - MongoUrl=mongodb://mongodb
+      - SECRET=IAMALONE
+      - FR_Images_path=/home/frimages/
+      - FR_Detector_IP=http://34.96.141.209
+      - FR_Detector_Port=5000
+      - HeatMap_API=http://34.96.141.209:5100/heatmaps?regenerate=true&camera_ids=cam501,cam502,cam503,cam504
+      # - TMS_API_URL=http://124.29.235.205:42755/api/v1/Sundar
+      - PPE_Type=["apron","hairnet","facemask"]
+      - CHECK_IN_CAMERAS=99,100
+      - CHECK_OUT_CAMERAS=88,89
+      - CHECK_IN__OUT_CAMERAS=1,2
+    # build: ./pitb-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../FR/data/faces_data:/home/frimages/
+      - ../FR/data/frontend_FR_images:/app/uploads/images/fr/
+      - ../ANPR/data/frontend_ANPR_images:/app/uploads/images/anpr/
+      - ./productdetection:/app/uploads/images/productdetection/
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./attendance:/app/uploads/images/attendance
+  react-frontend:
+    depends_on:
+      - nestjs-apis
+    image: aletheiaai/deployments:dashboard.react.fatima-group.12022025
+    # image: aletheiaai/deployments:dashboard.react.fatima-group.07022025
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./config.js:/usr/share/nginx/html/config.js
+    ports:
+      # - "4000:4000"
+      # - "443:443"
+      - "80:4000"
+  
+  mongoexpress:
+    restart: always
+    depends_on:
+      - mongodb
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    links:
+      - mongodb
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://mongodb

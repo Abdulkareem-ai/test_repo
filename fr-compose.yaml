@@ -1,0 +1,150 @@
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+      max-file: "1"
+      max-size: 10m
+      # tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+      tag: "{{.Name}}"
+x-no-logging:
+  &no-logging
+  driver: "none"
+
+services:
+  imagebuffer:
+    image: aletheiaai/deployments:imagebuffer.gpu.amd64.v2024.12.beta
+    runtime: nvidia
+    restart: unless-stopped
+    volumes:
+      - ../../configs/fr_main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/shm:/dev/shm
+      - ../../../videos:/videos
+    environment:
+      - IMAGE_BUFFER_STREAM_URL=${IMAGE_BUFFER_STREAM_URL}
+      - CAM_ID=${CAM_ID}
+    logging: *default-logging
+    healthcheck:
+      test: [ "CMD", "/workspace/health_check.sh" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  detector:
+    image: aletheiaai/deployments:detectorclient.v2024.12.beta
+    restart: unless-stopped
+    environment:
+      - MODEL_NAME=face_detection
+      - REDIS_INPUT_QUEUE=BufferOutQueue
+      - DEBUG=0
+      - CAM_ID=${CAM_ID}
+    volumes:
+      - ../../configs/fr_main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/shm:/dev/shm
+    logging: *default-logging
+    # healthcheck:
+    #   test: [ "CMD", "/workspace/health_check.sh" ]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 60s
+
+  mesh:
+    image: aletheiaai/deployments:detectorclient.v2024.12.beta
+    restart: unless-stopped
+    volumes:
+       - ../../configs/fr_main.yaml:/workspace/config.yaml
+       - /etc/localtime:/etc/localtime:ro
+       - ../data/:/data_mount
+       - /dev/shm:/dev/shm 
+    init: true
+    environment:
+      - MODEL_NAME=face_mesh:1
+      - REDIS_INPUT_QUEUE=face_detection_outqueue
+      - CAM_ID=${CAM_ID}
+    logging: *default-logging
+    # healthcheck:
+    #   test: [ "CMD", "/workspace/health_check.sh" ]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 60s
+
+  features:
+    image: aletheiaai/deployments:detectorclient.v2024.12.beta
+    restart: unless-stopped
+    volumes:
+      - ../../configs/fr_main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - ../data/:/data_mount
+      - /dev/shm:/dev/shm 
+    environment:
+      - MODEL_NAME=face_features:1
+      - REDIS_INPUT_QUEUE=face_mesh_outqueue
+      - CAM_ID=${CAM_ID}
+    logging: *default-logging
+    # healthcheck:
+    #   test: [ "CMD", "/workspace/health_check.sh" ]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 60s
+
+  recognition:
+    image: aletheiaai/deployments:detectorclient.v2024.12.beta
+    restart: unless-stopped
+    volumes:
+      - ../../configs/fr_main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - ../data/:/data:rw
+      - /dev/shm:/dev/shm 
+    environment:
+      - MODEL_NAME=face_recognition:1
+      - REDIS_INPUT_QUEUE=face_features_outqueue
+      - CAM_ID=${CAM_ID}
+    logging: *default-logging
+    # healthcheck:
+    #   test: [ "CMD", "/workspace/health_check.sh" ]
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 60s
+  
+  streamer:
+    runtime: nvidia
+    restart: always
+    image: aletheiaai/deployments:streamer.amd64.v2024.12.beta
+    init: true
+    network_mode: host
+    privileged: true
+    volumes:
+      - ../../configs/fr_main.yaml:/workspace/config.yaml
+      - /etc/localtime:/etc/localtime:ro 
+      - /dev/shm:/dev/shm
+    environment:
+      CAM_ID: ${CAM_ID}
+      TZ: "Asia/Karachi"
+      REDIS_INPUT_QUEUE: face_recognition_outqueue
+      REDIS_PUBSUB: 0
+      # STREAMER_FRAME_SIZE: 360x640
+      # STREAMER_FPS: ${IMAGE_BUFFER_FPS}
+      STREAMER_HW_ACCEL: 0
+      DEBUG: 0
+    logging: *default-logging
+  
+  # videowriter:
+  #   image: aletheiaai/deployments:videowriter.gpu.amd64.main
+  #   runtime: nvidia
+  #   restart: unless-stopped
+  #   environment:
+  #     - REDIS_INPUT_QUEUE=face_recognition_outqueue
+  #     - VIDEOWRITER_PREFIX=${CAM_ID}
+  #     - CAM_ID=${CAM_ID}
+  #   volumes:
+  #     - ../../configs/fr_main.yaml:/workspace/config.yaml
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ../data:/data
+  #     - /dev/shm:/dev/shm
+  #   logging: *default-logging

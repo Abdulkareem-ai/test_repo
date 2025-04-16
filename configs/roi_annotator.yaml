@@ -1,0 +1,241 @@
+cam_prop_prefix: cam
+cams:
+  cam101:
+    counting_lines:
+    - - 19
+      - 21
+      - 83
+      - 90
+      - UPTODOWN
+      - EXIT
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam102:
+    counting_lines:
+    - - 87
+      - 25
+      - 10
+      - 88
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam103:
+    counting_lines:
+    - - 12
+      - 31
+      - 69
+      - 95
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam104:
+    counting_lines:
+    - - 3
+      - 84
+      - 99
+      - 46
+      - UPTODOWN
+      - EXIT
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam201:
+    counting_lines:
+    - - 62
+      - 68
+      - 46
+      - 68
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam202:
+    counting_lines:
+    - - 40
+      - 56
+      - 58
+      - 55
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam203:
+    counting_lines:
+    - - 43
+      - 75
+      - 60
+      - 74
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam204:
+    counting_lines:
+    - - 26
+      - 60
+      - 46
+      - 58
+      - DOWNTOUP
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam205:
+    counting_lines:
+    - - 31
+      - 37
+      - 55
+      - 46
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam206:
+    counting_lines:
+    - - 36
+      - 53
+      - 54
+      - 53
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam207:
+    counting_lines:
+    - - 27
+      - 72
+      - 61
+      - 70
+      - UPTODOWN
+      - ENTER
+    crop_region: []
+    roi_boxes:
+    - - 0
+      - 0
+      - 100
+      - 0
+      - 100
+      - 100
+      - 0
+      - 100
+      - Box 0
+  cam301:
+    counting_lines: []
+    crop_region: []
+    roi_boxes:
+    - - 31
+      - 0
+      - 45
+      - 0
+      - 60
+      - 100
+      - 23
+      - 100
+      - Box 0
+  cam302:
+    counting_lines: []
+    crop_region: []
+    roi_boxes:
+    - - 40
+      - 0
+      - 55
+      - 0
+      - 70
+      - 100
+      - 33
+      - 100
+      - Box 0
+redis_publish_channel: countingroi
+redis_url: redis://default:aletheia@123@172.17.0.1:6379
+rtsp_server_http_address: 34.96.141.209
+rtsp_server_http_port: 1984
