@@ -16,6 +16,6 @@ jobs:
         id: pull
         run: |
           TOKEN=${{ secrets.TOKEN }}
-          cd /home/kareemx/Desktop/test_git/test-repo
+          cd /home/kareemx/Desktop/test_git/test_repo
           remote_repo="https://${GITHUB_ACTOR}:$TOKEN@github.com/${GITHUB_REPOSITORY}.git"
           git pull "$remote_repo" main
