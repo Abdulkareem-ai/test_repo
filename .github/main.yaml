@@ -1,0 +1,21 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  update:
+    runs-on:
+      - test_repo
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull Changes to Deployment Directory
+        id: pull
+        run: |
+          TOKEN=${{ secrets.TOKEN }}
+          cd /home/kareemx/Desktop/test_git/test-repo
+          remote_repo="https://${GITHUB_ACTOR}:$TOKEN@github.com/${GITHUB_REPOSITORY}.git"
+          git pull "$remote_repo" main
